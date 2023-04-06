@@ -4,8 +4,9 @@ import { Repository } from 'typeorm';
 import { Posts } from './post/post.entity';
 import { Reactions } from './reaction/reaction.entity';
 import { Users } from './user/user.entity';
-import { USERS, POSTS, REACTIONS } from './seedingDB';
+import { USERS, POSTS, REACTIONS, REPORTS } from './seedingDB';
 import { CountDTO } from './aux/aux.entities';
+import { Reports } from './report/report.entity';
 
 @Injectable()
 export class AppService {
@@ -16,16 +17,17 @@ export class AppService {
         private readonly postRepository: Repository<Posts>,
         @InjectRepository(Reactions)
         private readonly reactionRepository: Repository<Reactions>,
+        @InjectRepository(Reports)
+        private readonly reportRepository: Repository<Reports>
     ) { }
     async seedDB() {
         await this.userRepository.save(USERS);
         await this.postRepository.save(POSTS);
-        Logger.log('Seeded Users and Posts', 'AppService');
+        await this.reportRepository.save(REPORTS);
         for (var i = 0; i < REACTIONS.length; i++) {
             Logger.log(`Seeding Reaction ${i}`, 'AppService');
             await this.reactionRepository.save(REACTIONS[i]);
         }
-        Logger.log('Seeded Reactions', 'AppService');
     }
 
     async count(): Promise<CountDTO> {
@@ -37,5 +39,16 @@ export class AppService {
         const reactions = await this.reactionRepository.count();
         res.reactions = reactions
         return res;
+    }
+
+    async setupDB() {
+        const count = await this.count();
+        if (count.users == 0 && count.posts == 0 && count.reactions == 0) {
+            Logger.log('Seeding DB', 'AppService');
+            await this.seedDB();
+        }
+        else {
+            Logger.log('DB already seeded', 'AppService');
+        }
     }
 }

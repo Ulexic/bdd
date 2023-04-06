@@ -1,5 +1,6 @@
 import { Exclude } from "class-transformer";
 import { Reactions } from "src/reaction/reaction.entity";
+import { Reports } from "src/report/report.entity";
 import { Users } from "src/user/user.entity";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn } from "typeorm";
 
@@ -20,6 +21,8 @@ export class Posts {
     @OneToMany(() => Reactions, reaction => reaction.post)
     reactions: Reactions[];
 
+    @OneToMany(() => Reports, report => report.post)
+    reports: Reports[];
 }
 
 export class PostDTO {

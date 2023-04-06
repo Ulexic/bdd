@@ -45,9 +45,6 @@ export class PostController {
         @Body() body: PostDTO,
         @Res() response
     ) {
-        if (!body || body.content === null || body.userId === undefined) {
-            return response.status(400).send('Body is empty');
-        }
         try {
             const res = await this.postService.modifyPost(id, body);
             response.status(200).send();

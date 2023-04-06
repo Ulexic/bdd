@@ -8,7 +8,7 @@ export class AppController {
 
     @Post()
     async seeddb(): Promise<string> {
-        await this.appService.seedDB();
+        await this.appService.setupDB();
         return Promise.resolve('Seeding DB');
     }
 

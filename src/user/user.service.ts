@@ -16,4 +16,10 @@ export class UserService {
             .leftJoinAndSelect('user.reactions', 'reactions')
             .getMany();
     }
+
+    async getReporters() {
+        return await this.userRepository.createQueryBuilder('user')
+            .leftJoinAndSelect('user.reports', 'reports')
+            .getMany();
+    }
 }

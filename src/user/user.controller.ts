@@ -11,4 +11,11 @@ export class UserController {
     ) {
         response.status(200).send(await this.userService.getAllUsers());
     }
+
+    @Get('/reporter')
+    async getReporters(
+        @Res() response
+    ) {
+        response.status(200).send(await this.userService.getReporters());
+    }
 }

@@ -9,11 +9,13 @@ import { Users } from './user/user.entity';
 import { Reactions } from './reaction/reaction.entity';
 import { Posts } from './post/post.entity';
 import dataSource, { options } from './datasource';
+import { ReportModule } from './report/report.module';
+import { Reports } from './report/report.entity';
 
 @Module({
     imports: [TypeOrmModule.forRoot(options),
-    TypeOrmModule.forFeature([Users, Posts, Reactions]),
-        ReactionModule, PostModule, UserModule],
+    TypeOrmModule.forFeature([Users, Posts, Reactions, Reports]),
+        ReactionModule, PostModule, UserModule, ReportModule],
     controllers: [AppController],
     providers: [AppService],
 })
