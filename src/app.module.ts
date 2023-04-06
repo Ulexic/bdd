@@ -8,18 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Users } from './user/user.entity';
 import { Reactions } from './reaction/reaction.entity';
 import { Posts } from './post/post.entity';
+import dataSource, { options } from './datasource';
 
 @Module({
-    imports: [TypeOrmModule.forRoot({
-        type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: '1234',
-        database: 'postgres',
-        entities: [Posts, Users, Reactions],
-        synchronize: false,
-    }),
+    imports: [TypeOrmModule.forRoot(options),
     TypeOrmModule.forFeature([Users, Posts, Reactions]),
         ReactionModule, PostModule, UserModule],
     controllers: [AppController],
