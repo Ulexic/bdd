@@ -1,7 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Posts } from "src/post/post.entity";
+import { Reactions } from "src/reaction/reaction.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class User {
+export class Users {
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
@@ -12,6 +14,12 @@ export class User {
     lastname: string;
     @Column()
     email: string;
+
+    @OneToMany(() => Posts, post => post.user)
+    posts: Posts[];
+
+    @OneToMany(() => Reactions, reaction => reaction.user)
+    reactions: Reactions[];
 }
 
 export class UserDTO {
